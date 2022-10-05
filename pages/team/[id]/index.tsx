@@ -1,8 +1,20 @@
 import { useRouter } from 'next/router';
 import { GetStaticProps, GetStaticPaths } from 'next';
-
+import styled from 'styled-components';
 import axios from 'axios';
 
+const CardContainer = styled.div`
+  background: #f9f9f9;
+  width: 35rem;
+  margin: 10px;
+  padding: 2rem;
+  box-shadow: 0 0 0.4rem #ccc;
+  border-radius: 0.2rem;
+  
+`;
+const AttributeTag = styled.span`
+  color: gray;
+`;
 interface IProps {
   teamName: string;
   leadInfo: {
@@ -16,6 +28,7 @@ interface IProps {
     firstName: string;
     lastName: string;
     location: string;
+    id:string,
   }[];
 }
 
@@ -26,28 +39,43 @@ const Index: NextPage = ({ teamName, leadInfo, teamMembers }: IProps) => {
     return <>Loading...</>;
   } else {
     return (
-      <div>
+      <center style={{ margin: '2rem' }}>
         <h1>Team: {teamName}</h1>
-        <div>
+        <CardContainer>
           <h4>Team Lead</h4>
-          <img src={leadInfo[0].avatarUrl} alt='user-avatar' />
-          {/* <Image src={leadInfo[0].avatarUrl} width={500} height={500} alt='user-avatar' /> */}
-          <span>
-            Name: {leadInfo[0].firstName + ' ' + leadInfo[0].lastName}
+          <div>
+            <img src={leadInfo[0].avatarUrl} alt='user-avatar' />
+            {/* <Image src={leadInfo[0].avatarUrl} width={500} height={500} alt='user-avatar' /> */}
+          </div>
+
+          <span style={{ display: 'block' }}>
+            <AttributeTag> FullName:</AttributeTag>{' '}
+            {leadInfo[0].firstName + ' ' + leadInfo[0].lastName}
           </span>
           <span>location: {leadInfo[0].location}</span>
+        </CardContainer>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'auto auto' }}>
+          {teamMembers?.map((mem) => (
+            <CardContainer key={mem.id} style={{ marginTop: '2rem' }}>
+              <div>
+                <img src={mem.avatarUrl} alt='user-avatar' />
+                {/* <Image src={mem.avatarUrl} width={500} height={500} alt='user-avatar' /> */}
+              </div>
+
+              <span style={{ display: 'block' }}>
+                <AttributeTag> FullName: </AttributeTag>
+                {mem.firstName + ' in' + mem.lastName}
+              </span>
+              <span style={{ display: 'block' }}>
+                {' '}
+                <AttributeTag>Location: </AttributeTag>
+                {mem.location}
+              </span>
+            </CardContainer>
+          ))}
         </div>
-        {teamMembers?.map((mem) => (
-          <div key={mem.id}>
-            <img src={mem.avatarUrl} alt='user-avatar' />
-            {/* <Image src={mem.avatarUrl} width={500} height={500} alt='user-avatar' /> */}
-            <span style={{ display: 'block' }}>
-              Name: {mem.firstName + ' in' + mem.lastName}
-            </span>
-            <span style={{ display: 'block' }}>Location: {mem.location}</span>
-          </div>
-        ))}
-      </div>
+      </center>
     );
   }
 };

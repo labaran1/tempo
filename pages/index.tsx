@@ -131,7 +131,7 @@ useEffect(() => {
           );
         })
       ) : (
-        <>{displayMessage}</>
+        <div style={{margin:"2rem"}}>{displayMessage}</div>
       )}
     </center>
   );
