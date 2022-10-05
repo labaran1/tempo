@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint", 
-    "test": "jest --watch " , 
+    "test": "jest --watchAll " , 
     "test:e2e": "playwright test test/e2e"
   },
   "dependencies": {
