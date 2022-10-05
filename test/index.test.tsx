@@ -6,9 +6,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 
 
-
 test('should render succesfully', () => { 
-    render(<Home/>)
+    render(<Home />);
     expect(screen.getByText("Search")).toBeInTheDocument()
     expect(screen.getByPlaceholderText("Search team")).toBeInTheDocument()
     // screen.debug()
