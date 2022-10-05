@@ -11,7 +11,7 @@
     ```
 2.  Install NPM packages
     ```sh
-     cd elections-system-frontend/
+     cd tempo/
      npm install
     ```
 3.  Start Project
