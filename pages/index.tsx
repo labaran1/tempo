@@ -2,7 +2,18 @@ import type { NextPage } from 'next'
 import axios from 'axios'
 import { useEffect, useState} from 'react'
 import Link from 'next/link'
+import styled from 'styled-components'
 
+const Container = styled.div`
+`
+const Input = styled.input`
+  width:30rem;
+  padding: 0.7rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  outline: none;
+`
 
 const Home: NextPage = () => {
   const [searchValue, setSearchValue] = useState<string|null>("")
@@ -50,8 +61,8 @@ useEffect(() => {
 
   
   return (
-    <div>
-      <input
+    <center>
+      <Input
         id='searchInput'
         type='text'
         placeholder='Search team'
@@ -65,7 +76,7 @@ useEffect(() => {
       {filteredTeam?.length > 0 ? (
         filteredTeam.map((team:any, index:number) => {
           return (
-            <div
+            <Container
               key={team.id}
               style={{
                 background: '#ccc',
@@ -88,19 +99,19 @@ useEffect(() => {
               </span>
 
               {team.viewDetails && (
-                <div>
+                <Container>
                   <Link href={`/team/${team.id}`} title='view team Info'>
                     <a>Members:{team.teamMembersId.length}</a>
                   </Link>
-                </div>
+                </Container>
               )}
-            </div>
+            </Container>
           );
         })
       ) : (
         <>{displayMessage}</>
       )}
-    </div>
+    </center>
   );
 }
 
