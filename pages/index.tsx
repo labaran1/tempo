@@ -13,8 +13,26 @@ const Input = styled.input`
   border-radius: 0.5rem;
   border: 1px solid #ccc;
   outline: none;
+`;
+const Button = styled.button`
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+`;
+const CardContainer = styled.div`
+  background: #f9f9f9;
+  width: 35rem;
+  margin: 10px;
+  padding: 2rem;
+  box-shadow: 0 0 0.4rem #ccc;
+  border-radius: 0.2rem;
+  display:flex;
+  justify-content: space-between;
+`;
+const AttributeTag = styled.span`
+  color: gray;
 `
-
 const Home: NextPage = () => {
   const [searchValue, setSearchValue] = useState<string|null>("")
   const [teams, setTeams] = useState([])
@@ -71,22 +89,34 @@ useEffect(() => {
           setSearchValue(e.target.value);
         }}
       />
-      <button onClick={searchUsers}>Search</button>
+      <Button onClick={searchUsers}>Search</Button>
 
       {filteredTeam?.length > 0 ? (
         filteredTeam.map((team:any, index:number) => {
           return (
-            <Container
-              key={team.id}
-              style={{
-                background: '#ccc',
-                width: '30rem',
-                height: 'auto',
-                margin: '2px',
-                padding: '2rem',
-              }}
-            >
-              <span>{team.name}</span>
+            <CardContainer key={team.id}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <span>
+                  {' '}
+                  <AttributeTag> Team Name:</AttributeTag> {team.name}
+                </span>
+                {team.viewDetails && (
+                  <Container style={{ marginTop: '1rem' }}>
+                    <Link href={`/team/${team.id}`}>
+                      <a title='view team Info'>
+                        <AttributeTag> Members:</AttributeTag>
+                        {team.teamMembersId.length}
+                      </a>
+                    </Link>
+                  </Container>
+                )}
+              </div>
 
               <span
                 style={{ color: 'red', cursor: 'pointer' }}
@@ -97,15 +127,7 @@ useEffect(() => {
               >
                 View Details
               </span>
-
-              {team.viewDetails && (
-                <Container>
-                  <Link href={`/team/${team.id}`} title='view team Info'>
-                    <a>Members:{team.teamMembersId.length}</a>
-                  </Link>
-                </Container>
-              )}
-            </Container>
+            </CardContainer>
           );
         })
       ) : (
