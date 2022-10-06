@@ -25,6 +25,8 @@
     ```
 2.  End-To-End Test
     ```sh
+       npm run build 
+       npm run start 
       npm run test:e2e
     ```
 
